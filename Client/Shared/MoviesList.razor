@@ -1,0 +1,22 @@
+﻿
+<CreateMovie NewMovie="AddMovie" />
+<br />
+<input type="checkbox" name="display-buttons-checkbox" @bind="displayButtons">
+<GenericList List="Movies" >
+  <ItemTemplate Context="movie">
+    <MovieItem Movie="movie"
+               DisplayButtons="displayButtons"
+               DeleteMovie="DeleteMovie" />
+  </ItemTemplate>
+</GenericList>
+
+
+
+@code {
+  [Parameter] public List<Movie> Movies { get; set; }
+  [Parameter] public RenderFragment NullMovieTemplate { get; set; }
+  [Parameter] public RenderFragment EmptyListTemplate { get; set; }
+  private bool displayButtons = true;
+  private void DeleteMovie(Movie movie) => Movies.Remove(movie);
+  private void AddMovie(Movie movie) => Movies?.Add(movie);
+}

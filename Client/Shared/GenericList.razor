@@ -1,0 +1,45 @@
+﻿@typeparam TItem
+
+<br />
+@if (List is null)
+{
+  @if (NullMovieTemplate is null)
+  {
+    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" />
+  }
+  else
+  {
+    @NullMovieTemplate
+  }
+}
+else if (List.Count == 0)
+{
+  @if (EmptyListTemplate is null)
+  {
+    <text>There are no records to show</text>
+  }
+  else
+  {
+    @EmptyListTemplate
+  }
+}
+else
+{
+  <input type="checkbox" name="display-buttons-checkbox" @bind="displayButtons">
+
+  @foreach (var item in List)
+  {
+
+    @ItemTemplate(item);
+    <br />
+  }
+}
+
+@code {
+  [Parameter] public List<TItem> List { get; set; }
+  [Parameter] public RenderFragment NullMovieTemplate { get; set; }
+  [Parameter] public RenderFragment EmptyListTemplate { get; set; }
+  [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+  private bool displayButtons = true;
+  private void AddItem(TItem item) => List?.Add(item);
+}

@@ -1,0 +1,74 @@
+﻿@page "/"
+
+<div>
+  <h3>Movies</h3>
+  <MoviesList Movies="movies">
+    <NullMovieTemplate>
+      <span style="color: red">This is loading...</span>
+      <MovieItem Movie="loadingMovie" />
+    </NullMovieTemplate>
+    <EmptyListTemplate>
+      <span style="color: darkgreen">No movies to display...</span>
+    </EmptyListTemplate>
+  </MoviesList>
+
+</div>
+
+<br />
+<br />
+<button @onclick=@(NullifyMoviesAndStartAgainAsync)>Nullify Movies.</button>
+
+@code{
+  string userName = "Mark";
+  List<Movie> movies;
+  private Movie loadingMovie => new Movie() { Title = "Loading" };
+  async Task NullifyMoviesAndStartAgainAsync()
+  {
+    movies = null;
+    await InitActivities();
+  }
+  protected async override Task OnInitializedAsync()
+  {
+    await InitActivities();
+  }
+
+  async Task InitActivities()
+  {
+    await Task.Delay(3000);
+    movies = new List<Movie>()
+{
+            new Movie()
+            {
+                Title = "Spider-Man: Far From Home",
+                ReleaseDate = new DateTime(2019, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Wonder Woman",
+                ReleaseDate = new DateTime(2017, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Fear and Loathing in Las Vegas",
+                ReleaseDate = new DateTime(2000, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Something Else",
+                ReleaseDate = new DateTime(1980, 7, 2)
+            }
+        };
+  }
+
+  Movie spiderMan = new Movie()
+  {
+    Title = "Spider-Man: Far From Home",
+    ReleaseDate = new DateTime(2019, 7, 2)
+  };
+
+  void WhenClicked()
+  {
+    Console.WriteLine("I've been clicked (from method)");
+  }
+
+}

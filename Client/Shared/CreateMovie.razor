@@ -1,0 +1,30 @@
+﻿<div>
+  <h3>Creat New Movie</h3>
+  <div>
+    <input id="movie-title" @bind="movie.Title" placeholder="Move Title" />
+
+    <label for="movie-title">Title</label>
+  </div>
+  <div>
+    <input id="movie-release-date" type="date" @bind-value="movie.ReleaseDate" />
+    <label for="movie-release-date">Release Date</label>
+  </div>
+  <div><button @onclick="SubmitNew">Add New Movie</button></div>
+
+</div>
+
+@code {
+  [Parameter] public EventCallback<Movie> NewMovie { get; set; }
+  private Movie movie = new Movie();
+
+  protected override void OnInitialized()
+  {
+    movie = new Movie();
+  }
+
+  private void SubmitNew()
+  {
+    NewMovie.InvokeAsync(movie);
+    movie = new Movie();
+  }
+}

@@ -1,0 +1,49 @@
+﻿@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<input type="number" @bind="currentCount" /> 
+<br />
+<MoviesList Movies="movies"/>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    List<Movie> movies;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Task.Delay(3000);
+        movies = new List<Movie>()
+        {
+            new Movie()
+            {
+                Title = "Spider-Man: Far From Home",
+                ReleaseDate = new DateTime(2019, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Wonder Woman",
+                ReleaseDate = new DateTime(2017, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Fear and Loathing in Las Vegas",
+                ReleaseDate = new DateTime(2000, 7, 2)
+            },
+            new Movie()
+            {
+                Title = "Something Else",
+                ReleaseDate = new DateTime(1980, 7, 2)
+            }
+        };
+    }
+}
